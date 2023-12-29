@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         .box{
+            width: 100px;
+            height: 50px;
+            border: 1px solid black;
+            background-color: red;
+            display:grid;
+            grid-template-areas: "a1 a2 a3";
+
+         }
+         .box>div{
+
+         }
+         .box>div:nth-child(1){
+            grid-area: 
+         }
+    </style>
+</head>
+<body><div class="box">
+    <div>box-1</div>
+    <div>box-2</div>
+    <div>box-3</div>
+    <div>box-4</div>
+    <div>box-5</div>
+
+</div>
+    <!-- div.{box-$}*5 -->
+</body>
+</html>
+
