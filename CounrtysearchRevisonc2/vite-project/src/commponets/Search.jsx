@@ -1,6 +1,3 @@
-// import { Box, Button, Input } from '@chakra-ui/react'
-// import React, { createContext, useContext, useState } from 'react'
-
 import React, { useContext, useState, useEffect, createContext } from 'react';
 import { Box, Button, Input, SimpleGrid, Text } from '@chakra-ui/react';
 import { debounce} from 'lodash';

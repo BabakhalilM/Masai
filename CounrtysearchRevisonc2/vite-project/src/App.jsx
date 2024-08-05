@@ -12,7 +12,7 @@ import Fav from './commponets/Fav'
 import History from './commponets/History'
 
 function App() {
-  // const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0);
 
   return (
     <>

@@ -52,13 +52,8 @@ export const login = async (req, res) => {
             try {
 
                 const passCheck = await bcrypt.compare(password , userExist.password);
-                // console.log("Stored hash:", userExist.password);
-                // console.log("Password to compare:", password);
-                // console.log("bycrpt compare", passCheck);
                 if (passCheck) {
                     const accessToken = generateToken(userExist);
-                    // userExist.refreshToken = refreshToken;
-                    // await userExist.save();
                     console.log("login successs");
                     res.status(200).json({ message: 'Login successful', accessToken });
                 } else {

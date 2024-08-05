@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Box, SimpleGrid, Text, Button, Heading } from '@chakra-ui/react';
 import { MyContext } from './contextprovider';
-// import { MyContext } from './Search';
-// import { MyContext } from './MycontextProvider';
 
 const Fav = () => {
     const { favorites, removeFavorite } = useContext(MyContext);

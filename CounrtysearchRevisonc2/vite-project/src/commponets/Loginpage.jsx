@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import axios from './api';
 import { Box, Button, FormControl, FormLabel, Input, Text, VStack, useToast } from '@chakra-ui/react';
-// import Cookies from 'js-cookie';
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -79,7 +79,6 @@ const LoginForm = () => {
       </form>
       <br />
       <p>Create an Account <Text color={"blue"} as={Link} to="/Signup" size="md">Signup</Text></p>
-      {/* <p><Text color={"blue"} as={Link} to="/forgotpassword" size="md">ForgotPassword?</Text></p> */}
     </Box>
   );
 };
