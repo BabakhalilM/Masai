@@ -9,7 +9,7 @@ const Header = () => {
 
   const onOpen = () => setIsOpen(true);
   const onClose = () => setIsOpen(false);
-  const { logout, user, role } = useContext(AuthContext);
+  const { logout, user, role,handleSearchChange } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -65,6 +65,7 @@ const Header = () => {
             bg="white"
             color="black"
             maxW="200px"
+            onChange={handleSearchChange}
           />
           {/* <Text as={Link} to="/signup" color="white" cursor="pointer" onClick={onClose}>
             Signup

@@ -55,6 +55,10 @@ const CreateEventForm = () => {
                 time: '',
                 location: '',
             });
+            
+      setTimeout(() => {
+        window.location.href = '/allEvents';
+      }, 1000);
         } catch (error) {
             console.error('Error creating event:', error);
             toast({

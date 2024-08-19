@@ -25,21 +25,20 @@ export const createEvent = async (req, res) => {
     }
 };
 
-
-
-// routes/event.js
-// const express = require('express');
-// const router = express.Router();
-// const Event = require('../models/Event');
-// const Registration = require('../models/Registration');
-
 // Browse Events
-export const Events= async (req, res) => {
+
+export const Events = async (req, res) => {
   try {
-    const userId = req.body.userId; // Get userId from query params or auth token
-    
-    // Fetch all events
-    const events = await Event.find().lean();
+    const userId = req.query.user; // Get userId from query params or auth token
+    const searchQuery = req.query.searchQuery || ''; // Get search query from query params
+
+    // Fetch events with search query filtering
+    const events = await Event.find({
+      $or: [
+        { name: { $regex: searchQuery, $options: 'i' } }, // Case-insensitive search
+        { location: { $regex: searchQuery, $options: 'i' } }
+      ]
+    }).lean();
 
     // Fetch registrations for the current user
     const registrations = await Registration.find({ user: userId });
@@ -61,26 +60,26 @@ export const Events= async (req, res) => {
 // Register for Event
 export const register= async (req, res) => {
   try {
-    const { userId } = req.body; // Get userId from the request (likely from session or token)
+    const { user } = req.body; // Get userId from the request (likely from session or token)
     const event = await Event.findById(req.params.eventId);
 
     if (event.participants.length < event.capacity) {
-      event.participants.push(userId);
+      event.participants.push(user);
       await event.save();
 
       const registration = await Registration.create({
-        user: userId,
+        user: user,
         event: event._id,
         status: 'registered',
       });
 
       res.status(200).json({ message: 'Successfully registered', registration });
     } else {
-      event.waitlist.push(userId);
+      event.waitlist.push(user);
       await event.save();
 
       const registration = await Registration.create({
-        user: userId,
+        user: user,
         event: event._id,
         status: 'waitlisted',
       });
@@ -94,21 +93,30 @@ export const register= async (req, res) => {
 };
 
 // Cancel Registration
-export const cancel= async (req, res) => {
+export const cancel = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { user } = req.body;
+    const userId = user;
     const event = await Event.findById(req.params.eventId);
+
+    console.log('Fetched Event:', event);
 
     const registration = await Registration.findOneAndDelete({ user: userId, event: event._id });
     if (!registration) {
       return res.status(400).json({ message: 'Registration not found' });
     }
 
+    console.log('Registration:', registration);
+
     if (registration.status === 'registered') {
       event.participants.pull(userId);
+      console.log('Participants after pull:', event.participants);
+
       if (event.waitlist.length > 0) {
         const nextUser = event.waitlist.shift();
         event.participants.push(nextUser);
+
+        console.log('Next user from waitlist:', nextUser);
 
         await Registration.findOneAndUpdate(
           { user: nextUser, event: event._id },
@@ -117,11 +125,15 @@ export const cancel= async (req, res) => {
       }
     } else if (registration.status === 'waitlisted') {
       event.waitlist.pull(userId);
+      console.log('Waitlist after pull:', event.waitlist);
     }
 
     await event.save();
+    console.log('Event saved:', event);
+
     res.status(200).json({ message: 'Registration cancelled' });
   } catch (err) {
+    console.error('Error:', err);
     res.status(500).json({ message: 'Failed to cancel registration' });
   }
 };

@@ -7,6 +7,6 @@ Eventrouter.post('/createevent',createEvent);
 Eventrouter.get('/events',Events);
 Eventrouter.post('/events/:eventId/register',register)
 
-Eventrouter.delete('/events;:eventId/cancel',cancel);
+Eventrouter.delete('/events/:eventId/cancel',cancel);
 
 export default Eventrouter;

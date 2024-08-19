@@ -18,27 +18,71 @@ import {
 import { AuthContext } from './Contextapi';
 
 const EventsList = () => {
-  const [events, setEvents] = useState([]);
+  // const [events, setEvents] = useState([]);
   const toast = useToast();
- const {user}=useContext(AuthContext);
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await axios.get('/events', {
-          params: { user },
-        });
-        console.log("responce for ",response.data);
-        setEvents(response.data);
-      } catch (error) {
-        console.error('Failed to fetch events', error);
-      }
-    };
+ const {user,events,setEvents}=useContext(AuthContext);
+ console.log(user);
 
-    fetchEvents();
-  }, []);
+  // const registerForEvent = async (eventId) => {
+  //   try {
+  //     console.log("email id",user);
+  //     const response = await axios.post(`/events/${eventId}/register`, {
+  //       user,
+  //     });
+  //     toast({
+  //       title: 'Registration Status',
+  //       description: response.data.message,
+  //       status: 'success',
+  //       duration: 5000,
+  //       isClosable: true,
+  //     });
+  //     // Update event registration status locally
+  //     setEvents(events.map(event =>
+  //       event._id === eventId ? { ...event, isRegistered: true } : event
+  //     ));
+  //   } catch (error) {
+  //     console.error('Failed to register', error);
+  //     toast({
+  //       title: 'Error',
+  //       description: 'Failed to register for the event',
+  //       status: 'error',
+  //       duration: 5000,
+  //       isClosable: true,
+  //     });
+  //   }
+  // };
+
+  // const cancelRegistration = async (eventId) => {
+  //   try {
+  //     const response = await axios.delete(`/events/${eventId}/cancel`, {
+  //       data: { user },
+  //     });
+  //     toast({
+  //       title: 'Registration Cancelled',
+  //       description: response.data.message,
+  //       status: 'success',
+  //       duration: 5000,
+  //       isClosable: true,
+  //     });
+  //     // Update event registration status locally
+  //     setEvents(events.map(event =>
+  //       event._id === eventId ? { ...event, isRegistered: false } : event
+  //     ));
+  //   } catch (error) {
+  //     console.error('Failed to cancel registration', error);
+  //     toast({
+  //       title: 'Error',
+  //       description: 'Failed to cancel registration',
+  //       status: 'error',
+  //       duration: 5000,
+  //       isClosable: true,
+  //     });
+  //   }
+  // };
 
   const registerForEvent = async (eventId) => {
     try {
+      console.log('email id', user);
       const response = await axios.post(`/events/${eventId}/register`, {
         user,
       });
@@ -70,6 +114,7 @@ const EventsList = () => {
       const response = await axios.delete(`/events/${eventId}/cancel`, {
         data: { user },
       });
+      console.log("cansel responce",response);
       toast({
         title: 'Registration Cancelled',
         description: response.data.message,
