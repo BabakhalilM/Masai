@@ -47,7 +47,6 @@ const CreateEventForm = () => {
                 duration: 5000,
                 isClosable: true,
             });
-            // Clear the form or redirect to another page if needed
             setEventData({
                 name: '',
                 description: '',
@@ -110,7 +109,7 @@ const CreateEventForm = () => {
                         name="capacity"
                         value={noLimit ? '' : eventData.capacity}
                         onChange={handleChange}
-                        isDisabled={noLimit} // Disable the input if no limit is checked
+                        isDisabled={noLimit} 
                     />
                 </FormControl>
 

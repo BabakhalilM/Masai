@@ -23,7 +23,7 @@ const Header = () => {
   };
 
   return (
-    <Box position="fixed" zIndex="1" bg="teal.500" p={4} w="100%">
+    <Box m={0} position="fixed" zIndex="1" bg="teal.500" p={4} w="100%">
       <Flex
         justify="space-between"
         align="center"
@@ -73,16 +73,16 @@ const Header = () => {
           {role=='admin' && <Text as={Link} to='/EventCreation' color="white" cursor="pointer" onClick={onClose}>
             Event Creation
           </Text>}
-          { role=='admin' && <Text color="white" cursor="pointer" onClick={onClose}>
-            Event Result
+          { role=='admin' && <Text as={Link} to='/Eventresult' color="white" cursor="pointer" onClick={onClose}>
+            Result/update
           </Text>}
           {/* Additional Texts */}
           <Text as={Link} to='/allEvents' color="white" cursor="pointer" onClick={onClose}>
             Events
           </Text>
-          <Text color="white" cursor="pointer" onClick={onClose}>
+          {/* <Text color="white" cursor="pointer" onClick={onClose}>
             Additional Link 2
-          </Text>
+          </Text> */}
           
           <Text as="button" onClick={handleClick} color="white" cursor="pointer">
             {user ? 'Logout' : 'Login'}

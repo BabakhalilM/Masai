@@ -14,8 +14,6 @@ const RegisterForm = () => {
     try {
       const response = await axios.post('/register', { name, email, password });
       console.log(response);
-      
-
       toast({
         title: 'Registration successful!',
         description: "You can now log in.",

@@ -139,3 +139,47 @@ export const cancel = async (req, res) => {
 };
 
 
+// import Event from './models/Event.js'; // Make sure to adjust the import path
+
+export const getEventById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ message: 'Event ID is required' });
+    }
+    console.log("event id",id);
+    // Find the event by ID
+    const event = await Event.findById(id).lean();
+
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Send the event details to the frontend
+    res.status(200).json(event);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch event' });
+  }
+};
+// import Event from './models/Event.js'; // Make sure to adjust the import path
+
+export const editEvent = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedEventData = req.body;
+
+    // Find the event by ID and update it with the new data
+    const updatedEvent = await Event.findByIdAndUpdate(id, updatedEventData, { new: true });
+
+    if (!updatedEvent) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Send the updated event details to the frontend
+    res.status(200).json(updatedEvent);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to update event' });
+  }
+};
