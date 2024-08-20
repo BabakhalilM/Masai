@@ -30,7 +30,8 @@ app.use(session({
 
 // Set up CORS
 app.use(cors({
-  origin: 'http://localhost:5173', // Set the URL of your frontend application
+  // origin: 'http://localhost:5173', // Set the URL of your frontend application
+    origin:'https://event-manager-frontend-7jnp.onrender.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true // Enable cookies and sessions to be sent cross-origin
 }));
